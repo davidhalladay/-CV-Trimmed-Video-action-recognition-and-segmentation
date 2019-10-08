@@ -1,57 +1,54 @@
-# Update Error
-### bash problem
->  The wget in the <get_data.sh> file cannot function in MacOS Mojava.
->  We have to use "gsed" instead of  "sed".
 
 
 
 
 
-
-# HW3 ― GAN, ACGAN and UDA
-In this assignment, you are given datasets of human face and digit images. You will need to implement the models of both GAN and ACGAN for generating human face images, and the model of DANN for classifying digit images from different domains.
+# HW4 ― Videos
+In this assignment, you will learn to perform both trimmed action recognition and temporal action segmentation in full-length videos.
 
 <p align="center">
-  <img width="550" height="500" src="https://lh3.googleusercontent.com/RvJZ5ZP0sVOqQ2qW7vIRJTP3PoIFCWGLYxvtYAjBKA2pLZWsyUICoBW9v_ENV6EsO7RBNVe1IIA">
+  <img width="750" height="250" src="https://lh3.googleusercontent.com/j48uA36UbZp3KR41opZUzntxhlJWoX_R5joeNsTGMN2_cSXI0UFNKuKVu8em_txzOIVbnU8p_oOb">
 </p>
 
-For more details, please click [this link](https://1drv.ms/p/s!AmVnxPwdjNF2gZtOUMO5HEEQqLB8Ew) to view the slides of HW3.
+For more details, please click [this link](https://docs.google.com/presentation/d/1goz0OCo31GH2YS4l8qODr_ITL7YD-aeFdfqJ-XJt6nU/edit?usp=sharing) to view the slides of HW4.
 
 # Usage
 To start working on this assignment, you should clone this repository into your local machine by using the following command.
 
-    git clone https://github.com/dlcv-spring-2019/hw3-<username>.git
+    git clone https://github.com/dlcv-spring-2019/hw4-<username>.git
 Note that you should replace `<username>` with your own GitHub username.
 
 ### Dataset
 In the starter code of this repository, we have provided a shell script for downloading and extracting the dataset for this assignment. For Linux users, simply use the following command.
 
     bash ./get_dataset.sh
-The shell script will automatically download the dataset and store the data in a folder called `hw3_data`. Note that this command by default only works on Linux. If you are using other operating systems, you should download the dataset from [this link](https://drive.google.com/uc?export=download&id=1gbnGEMyLIsYdIoyUyVZjYK8MzQZs4e_V) and unzip the compressed file manually.
+The shell script will automatically download the dataset and store the data in a folder called `hw4_data`. Note that this command by default only works on Linux. If you are using other operating systems, you should download the dataset from [this link](https://drive.google.com/uc?export=download&id=1ncmqWLctmvecIXBdVng5cvbROoTWFSpE) and unzip the compressed file manually.
 
 > ⚠️ ***IMPORTANT NOTE*** ⚠️  
-> You should keep a copy of the dataset only in your local machine. **DO NOT** upload the dataset to this remote repository. If you extract the dataset manually, be sure to put them in a folder called `hw3_data` under the root directory of your local repository so that it will be included in the default `.gitignore` file.
+> You should keep a copy of the dataset only in your local machine. **DO NOT** upload the dataset to this remote repository. If you extract the dataset manually, be sure to put them in a folder called `hw4_data` under the root directory of your local repository so that it will be included in the default `.gitignore` file.
 
-### Evaluation
-To evaluate your UDA models in Problems 3 and 4, you can run the evaluation script provided in the starter code by using the following command.
+For this dataset, the action labels are defined as below:
 
-    python3 hw3_eval.py $1 $2
+|       Action      | Label |
+|:-----------------:|:-----:|
+| Other             | 0     |
+| Inspect/Read      | 1     |
+| Open              | 2     |
+| Take              | 3     |
+| Cut               | 4     |
+| Put               | 5     |
+| Close             | 6     |
+| Move Around       | 7     |
+| Divide/Pull Apart | 8     |
+| Pour              | 9     |
+| Transfer          | 10    |
 
- - `$1` is the path to your predicted results (e.g. `hw3_data/digits/mnistm/test_pred.csv`)
- - `$2` is the path to the ground truth (e.g. `hw3_data/digits/mnistm/test.csv`)
-
-Note that for `hw3_eval.py` to work, your predicted `.csv` files should have the same format as the ground truth files we provided in the dataset as shown below.
-
-| image_name | label |
-|:----------:|:-----:|
-| 00000.png  | 4     |
-| 00001.png  | 3     |
-| 00002.png  | 5     |
-| ...        | ...   |
+### Utility
+We have also provided a Python script for reading video files and retrieving labeled videos as a dictionary. For more information, please read the comments in [`reader.py`](reader.py).
 
 # Submission Rules
 ### Deadline
-108/05/08 (Wed.) 01:00 AM
+108/06/05 (Wed.) 01:00 AM
 
 ### Late Submission Policy
 You have a five-day delay quota for the whole semester. Once you have exceeded your quota, the credit of any late submission will be deducted by 30% each day.
@@ -65,28 +62,38 @@ Note that while it is possible to continue your work in this repository after th
 
 ### Submission Format
 Aside from your own Python scripts and model files, you should make sure that your submission includes *at least* the following files in the root directory of this repository:
- 1.   `hw3_<StudentID>.pdf`  
+ 1.   `hw4_<StudentID>.pdf`  
 The report of your homework assignment. Refer to the "*Grading*" section in the slides for what you should include in the report. Note that you should replace `<StudentID>` with your student ID, **NOT** your GitHub username.
- 1.   `hw3_p1p2.sh`  
-The shell script file for running your GAN and ACGAN models. This script takes as input a folder and should output two images named `fig1_2.jpg` and `fig2_2.jpg` in the given folder.
- 1.   `hw3_p3.sh`  
-The shell script file for running your DANN model. This script takes as input a folder containing testing images and a string indicating the target domain, and should output the predicted results in a `.csv` file.
- 1.   `hw3_p4.sh`  
-The shell script file for running your improved UDA model. This script takes as input a folder containing testing images and a string indicating the target domain, and should output the predicted results in a `.csv` file.
+ 1.   `hw4_p1.sh`  
+The shell script file for data preprocessing. This script takes as input two folders: the first one contains the video data, and the second one is where you should output the label file named `p1_valid.txt`.
+ 1.   `hw4_p2.sh`  
+The shell script file for trimmed action recognition. This script takes as input two folders: the first one contains the video data, and the second one is where you should output the label file named `p2_result.txt`.
+ 1.   `hw4_p3.sh`  
+The shell script file for temporal action segmentation. This script takes as input two folders: the first one contains the video data, and the second one is where you should output the label files named `<video_category>.txt`. Note that you should replace `<video_category>` accordingly, and a total of **7** files should be generated in this script.
 
 We will run your code in the following manner:
 
-    bash ./hw3_p1p2.sh $1
-    bash ./hw3_p3.sh $2 $3 $4
-    bash ./hw3_p4.sh $2 $3 $4
+**Problem 1**
 
--   `$1` is the folder to which you should output your `fig1_2.jpg` and `fig2_2.jpg`.
--   `$2` is the directory of testing images in the **target** domain (e.g. `hw3_data/digits/mnistm/test`).
--   `$3` is a string that indicates the name of the target domain, which will be either `mnistm`, `usps` or `svhn`. 
-	- Note that you should run the model whose *target* domain corresponds with `$3`. For example, when `$3` is `mnistm`, you should make your prediction using your "USPS→MNIST-M" model, **NOT** your "MNIST-M→SVHN" model.
--   `$4` is the path to your output prediction file (e.g. `hw3_data/digits/mnistm/test_pred.csv`).
+    bash ./hw4_p1.sh $1 $2 $3
+-   `$1` is the folder containing the ***trimmed*** validation videos (e.g. `TrimmedVideos/video/valid/`).
+-   `$2` is the path to the ground truth label file for the videos (e.g. `TrimmedVideos/label/gt_valid.csv`).
+-   `$3` is the folder to which you should output your predicted labels (e.g. `./output/`).
 
-> 🆕 ***NOTE***  
+**Problem 2**
+
+    bash ./hw4_p2.sh $1 $2 $3
+-   `$1` is the folder containing the ***trimmed*** validation/test videos.
+-   `$2` is the path to the ground truth label file for the videos (e.g. `TrimmedVideos/label/gt_valid.csv` or `TrimmedVideos/label/gt_test.csv`).
+-   `$3` is the folder to which you should output your predicted labels (e.g. `./output/`).
+
+**Problem 3**
+
+    bash ./hw4_p3.sh $1 $2
+-   `$1` is the folder containing the ***full-length*** validation videos.
+-   `$2` is the folder to which you should output your predicted labels (e.g. `./output/`).
+
+> ***NOTE***  
 > For the sake of conformity, please use the `python3` command to call your `.py` files in all your shell scripts. Do not use `python` or other aliases, otherwise your commands may fail in our autograding scripts.
 
 ### Packages
@@ -100,7 +107,8 @@ Below is a list of packages you are allowed to import in this assignment:
 > [`numpy`](http://www.numpy.org/): 1.16.2  
 > [`pandas`](https://pandas.pydata.org/): 0.24.0  
 > [`torchvision`](https://pypi.org/project/torchvision/): 0.2.2  
-> [`cv2`](https://pypi.org/project/opencv-python/), [`matplotlib`](https://matplotlib.org/), [`skimage`](https://scikit-image.org/), [`Pillow`](https://pillow.readthedocs.io/en/stable/), [`scipy`](https://www.scipy.org/)  
+> [`cv2`](https://pypi.org/project/opencv-python/), [`matplotlib`](https://matplotlib.org/), [`skimage`](https://scikit-image.org/), [`Pillow`](https://pillow.readthedocs.io/en/stable/), [`scipy`](https://www.scipy.org/), [`imageio`](https://pypi.org/project/imageio/)    
+> [`scikit-video`](http://www.scikit-video.org/stable/): 1.1.11  
 > [The Python Standard Library](https://docs.python.org/3/library/)
 
 Note that using packages with different versions will very likely lead to compatibility issues, so make sure that you install the correct version if one is specified above. E-mail or ask the TAs first if you want to import other packages.
@@ -111,8 +119,8 @@ Note that using packages with different versions will very likely lead to compat
 - **If we fail to run your code due to not following the submission rules, you will receive 0 credit for this assignment.**
 
 # Q&A
-If you have any problems related to HW3, you may
+If you have any problems related to HW4, you may
 - Use TA hours (please check [course website](http://vllab.ee.ntu.edu.tw/dlcv.html) for time/location)
 - Contact TAs by e-mail ([ntudlcvta2019@gmail.com](mailto:ntudlcvta2019@gmail.com))
-- Post your question in the comment section of [this post](https://www.facebook.com/notes/dlcv-spring-2019/hw3-qa/327017398008644/)
+- Post your question in the comment section of [this post](https://www.facebook.com/notes/dlcv-spring-2019/hw4-qa/338726146837769/)
 
